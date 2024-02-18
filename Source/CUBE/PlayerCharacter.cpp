@@ -46,6 +46,7 @@ APlayerCharacter::APlayerCharacter()
 	, Camera(NULL)
 	, playerstate(Idle)
 	, OnLadder(false)
+	, CollisionPlayer(false)
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -162,7 +163,7 @@ void APlayerCharacter::UpdateCamera()
 		// カメラの更新
 		if (CntNum < 90)
 		{
-			if (playerstate == Idle || playerstate == Climb)
+			if (playerstate != PlayerCamera)
 			{
 				// カメラの取得
 				AMainCamera* CameraObj = Cast<AMainCamera>(Camera);
@@ -205,7 +206,26 @@ void APlayerCharacter::UpdateCharacter()
 
 	if (OnLadder) { playerstate = Climb; }
 	else if (ChangePlayerCamera) { playerstate = PlayerCamera; }
+	else if (CollisionPlayer) { playerstate = FollowCamera; }
 	else { playerstate = Idle; }
+
+	AMainCamera* CameraObj = NULL;
+	if (playerstate == FollowCamera)
+	{
+		if (CameraObj == NULL)
+		{
+			CameraObj = Cast<AMainCamera>(Camera);
+
+			CameraObj->OnFollowPlayer(true);
+		}
+		else { return; }
+	}
+	else
+	{
+		if (CameraObj != NULL) {
+			CameraObj->OnFollowPlayer(false);
+		}
+	}
 }
 
 // カメラインプット（回転）

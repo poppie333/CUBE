@@ -85,6 +85,9 @@ private:
 	// カメラアクターの取得
 	void GetCamera();
 
+	// トリガーの取得
+	void GetTrigger();
+
 private:
 	// メンバ変数
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -127,6 +130,7 @@ private:
 	enum PlayerState {
 		Idle,
 		Climb,
+		FollowCamera,
 		PlayerCamera,
 	};
 	PlayerState playerstate;
@@ -136,6 +140,8 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Reference, meta = (AllowPrivateAccess = "true"))
 		bool OnLadder;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Reference, meta = (AllowPrivateAccess = "true"))
+		bool CollisionPlayer;
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Reference, meta = (AllowPrivateAccess = "true"))
