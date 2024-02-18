@@ -12,8 +12,6 @@
 *				：キャラクターの状態管理処理	by 日向野		 on 2024/02/16
 */
 
-// print
-
 
 
 #include "PlayerCharacter.h"
